@@ -12,9 +12,9 @@
 struct node *taskList = NULL;
 
 // add a task to the list
-void add(char*name, int priority, int burst){
+void add(char *name, int priority, int burst) {
     Task *newTask = malloc(sizeof(Task));
-    newTask->name = name;
+    newTask->name = strdup(name);
     newTask->priority = priority;
     newTask->burst = burst;
     insert(&taskList, newTask);
