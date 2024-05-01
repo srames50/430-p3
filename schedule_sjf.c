@@ -17,7 +17,7 @@ void add(char *name, int priority, int burst) {
 }
 
 // pick next task using SJF
-Task *newTask(){
+Task *nextTask(){
     if(!taskList){
         return NULL;
     }

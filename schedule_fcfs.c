@@ -26,7 +26,7 @@ bool compareTaskName(char *a, char *b) {
 }
 
 // pick the next task from the list
-Task *pickNextTask() {
+Task *nextTask() {
   // if list is empty, nothing to do
   if (!taskList){
     return NULL;
@@ -36,7 +36,7 @@ Task *pickNextTask() {
   Task *bestSoFar = temp;
 
   while (temp != NULL) {
-    if (comesBefore(temp->task->name, bestSoFar->name))
+    if (compareTaskName(temp->task->name, bestSoFar->name))
       bestSoFar = temp->task;
     temp = temp->next;
   }
