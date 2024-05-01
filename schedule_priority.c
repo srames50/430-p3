@@ -25,24 +25,24 @@ Task *nextTask(){
     }
 
     struct node *temp = taskList;
-    struct node *highest_priority_task = temp;
+    struct node *highestPriorityTask = temp;
     temp = temp->next;
 
     // Traverse the rest of the list
     while (temp != NULL){
-        if (temp->task->priority > highest_priority_task->task->priority){
-            highest_priority_task = temp;
+        if (temp->task->priority > highestPriorityTask->task->priority){
+            highestPriorityTask = temp;
         }
-        else if (temp->task->priority == highest_priority_task->task->priority){
+        else if (temp->task->priority == highestPriorityTask->task->priority){
             // If priorities are the same, use lexicographical order of the task names
-            if (strcmp(temp->task->name, highest_priority_task->task->name) < 0){
-                highest_priority_task = temp;
+            if (strcmp(temp->task->name, highestPriorityTask->task->name) < 0){
+                highestPriorityTask = temp;
             }
         }
         temp = temp->next;
     }
     // Return the task with the highest priority
-    return highest_priority_task->task;
+    return highestPriorityTask->task;
 }
 
 // Invokes the scheduler
@@ -52,24 +52,24 @@ void schedule()
     freopen("output.txt", "a", stdout);
 
     printf("Priority: \n");
-    int current_time = 0;
-    int total_task_time = 0; // Total time tasks have been running
-    int task_count = 0;      // Count of processed tasks
+    int currTime = 0;
+    int totalTaskTime = 0; // Total time tasks have been running
+    int taskCount = 0;      // Count of processed tasks
 
     while (taskList)
     {
         Task *task = nextTask();
-        task_count++;
+        taskCount++;
 
         run(task, task->burst);
 
-        total_task_time += task->burst;
-        current_time += task->burst;
+        totalTaskTime += task->burst;
+        currTime += task->burst;
 
         // Add dispatcher time
         if (taskList->next)
         {
-            current_time += DISPATCHER_TIME;
+            currTime += DISPATCHER_TIME;
         }
 
         delete (&taskList, task);
@@ -79,8 +79,8 @@ void schedule()
 
     // Calculate CPU utilization
     // We subtract the dispatcher time only if there was more than one task
-    float cpu_utilization = 100.0 * ((float)total_task_time / (current_time - (task_count > 1 ? DISPATCHER_TIME : 0)));
-    printf("CPU Utilization: %.2f%%\n", cpu_utilization);
+    float cpuUtil = 100.0 * ((float)totalTaskTime / (currTime - (taskCount > 1 ? DISPATCHER_TIME : 0)));
+    printf("CPU Utilization: %.2f%%\n", cpuUtil);
     printf("\n\n");
 
     // Close the file to ensure all output is flushed to 'output.txt'

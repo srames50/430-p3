@@ -26,38 +26,38 @@ Task * nextTask(){
         return NULL;
     }
     struct node *temp = taskList;
-    struct node *highest_priority_task = temp;
+    struct node *highestPriorityTask = temp;
     temp = temp->next;
 
     // Find the task with the highest priority
     while (temp != NULL)
     {
-        if (temp->task->priority > highest_priority_task->task->priority)
+        if (temp->task->priority > highestPriorityTask->task->priority)
         {
-            highest_priority_task = temp;
+            highestPriorityTask = temp;
         }
         temp = temp->next;
     }
 
     // Now we find the first task with this priority in lexicographic order
-    int highest_priority = highest_priority_task->task->priority;
+    int topPriority = highestPriorityTask->task->priority;
     struct node *current = taskList;
-    struct node *selected_task = NULL;
+    struct node *selectedTask = NULL;
 
     while (current != NULL)
     {
-        if (current->task->priority == highest_priority)
+        if (current->task->priority == topPriority)
         {
-            if (selected_task == NULL || strcmp(current->task->name, selected_task->task->name) < 0)
+            if (selectedTask == NULL || strcmp(current->task->name, selectedTask->task->name) < 0)
             {
-                selected_task = current;
+                selectedTask = current;
             }
         }
         current = current->next;
     }
 
     // Return the task with the highest priority and lexicographically smallest name
-    return selected_task->task;
+    return selectedTask->task;
 }
 
 void schedule(){
@@ -98,8 +98,8 @@ void schedule(){
     }
 
     // Calculate CPU utilization
-    float cpu_utilization = 100.0 * ((float)totalTaskTime / currTime);
-    printf("CPU Utilization: %.2f%%\n", cpu_utilization);
+    float cpuUtil = 100.0 * ((float)totalTaskTime / currTime);
+    printf("CPU Utilization: %.2f%%\n", cpuUtil);
 
     printf("\n\n");
 

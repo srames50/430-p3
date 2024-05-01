@@ -33,15 +33,15 @@ Task *pickNextTask() {
   }
 
   struct node *temp = taskList;
-  Task *best_sofar = temp;
+  Task *bestSoFar = temp;
 
   while (temp != NULL) {
-    if (comesBefore(temp->task->name, best_sofar->name))
-      best_sofar = temp->task;
+    if (comesBefore(temp->task->name, bestSoFar->name))
+      bestSoFar = temp->task;
     temp = temp->next;
   }
   
-  return best_sofar;
+  return bestSoFar;
 }
 
 void schedule(){
@@ -65,8 +65,8 @@ void schedule(){
     currTime += DISPATCHER_TIME * (taskCount - 1);
 
     // Calculate CPU utilization
-    float cpu_utilization = 100 * ((float)totalTaskTime / currTime);
-    printf("CPU Utilization: %.2f%%\n", cpu_utilization);
+    float cpuUtil = 100 * ((float)totalTaskTime / currTime);
+    printf("CPU Utilization: %.2f%%\n", cpuUtil);
     printf("\n\n");
     fclose(stdout);
 }
